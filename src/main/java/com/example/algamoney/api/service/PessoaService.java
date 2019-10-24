@@ -15,7 +15,7 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
     public Pessoa salvar(Pessoa pessoa) {
         pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
         return pessoaRepository.save(pessoa);
