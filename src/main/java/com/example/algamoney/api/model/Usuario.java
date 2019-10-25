@@ -1,18 +1,12 @@
 package com.example.algamoney.api.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements Serializable {
 
 	@Id
 	private Long codigo;
@@ -91,4 +85,14 @@ public class Usuario {
 		return true;
 	}
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "codigo=" + codigo +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", permissoes=" + permissoes +
+                '}';
+    }
 }

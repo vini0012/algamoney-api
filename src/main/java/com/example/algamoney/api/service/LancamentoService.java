@@ -124,23 +124,26 @@ public class LancamentoService {
 		return lancamentoRepository.save(lancamentoSalvo);
 	}
 
-	private void validarPessoa(Lancamento lancamento) {
+    public void validarPessoa(Lancamento lancamento) {
+        if (lancamento == null || lancamento.getCodigo() == null) {
+            throw new RuntimeException("Lançamento não pode ser nulo");
+        }
+
 		Pessoa pessoa = null;
 		if (lancamento.getPessoa().getCodigo() != null) {
 			pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo()).orElse(null);
 		}
 
 		if (pessoa == null || pessoa.isInativo()) {
-			throw new PessoaInexistenteOuInativaException();
+            throw new PessoaInexistenteOuInativaException("Pessoa Inexistente ou Inativa");
 		}
 	}
 
-	private Lancamento buscarLancamentoExistente(Long codigo) {
+    public Lancamento buscarLancamentoExistente(Long codigo) {
 		Lancamento lancamentoSalvo = lancamentoRepository.findById(codigo).orElse(null);
 		if (lancamentoSalvo == null) {
-			throw new IllegalArgumentException();
+            throw new RuntimeException("Lançamento não encontrado");
 		}
 		return lancamentoSalvo;
 	}
-
 }
